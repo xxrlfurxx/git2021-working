@@ -1,0 +1,23 @@
+<html>
+
+<body>
+  <script>
+    for (let i = 0; i < 5; i++) alert(i);
+    // alter(0) -> true
+    // alter(1) -> true
+    // alter(2) -> true         -> 0, 1, 2, 3, 4
+    // alter(3) -> true
+    // alter(4) -> true
+    // alter(5) -> false
+
+    for (let i = 0; i < 5; ++i) alert(i);
+      // alter(0) -> true
+      // alter(1) -> true
+      // alter(2) -> true         -> 0, 1, 2, 3, 4
+      // alter(3) -> true
+      // alter(4) -> true
+      // alter(5) -> false
+  </script>
+</body>
+
+</html>

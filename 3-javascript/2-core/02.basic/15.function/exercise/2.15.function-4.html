@@ -1,0 +1,25 @@
+<html>
+
+<body>
+  <script>
+    function pow(x, n) {
+      let result = x;
+
+      for (let i = 1; i < n; i++) {
+        result *= x;
+      }
+
+      return result;
+
+    }
+    let x = prompt("x의 값을 입력해 주세요.", "");
+    let n = prompt("제곱값을 입력해 주세요.", "");
+
+    if (n < 1) {
+      alert('1이상의 자연수를 입력해 주세요.', '');
+    } else {
+      alert(pow(x, n));
+    }
+    
+  </body >
+</html >
