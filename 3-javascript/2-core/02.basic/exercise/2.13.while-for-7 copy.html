@@ -1,0 +1,21 @@
+<html>
+
+<body>
+  <script>
+    let n = 10;
+    Prime:
+    for (i = 2; i <= n; i++) {
+
+      for (j = 2; j <= i; j++) {
+
+        if (i % j == 0) continue Prime;
+      }
+
+      console.log(i);
+
+    }
+
+  </script>
+</body>
+
+</html>
