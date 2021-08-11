@@ -1,0 +1,34 @@
+<html>
+
+<body>
+  <script>
+    checkSpam('buy ViAgRA now') == true
+    checkSpam('free xxxxx') == true
+    checkSpam("innocent rabbit") == false
+
+    // str에 'viagra’나 'XXX’라는 문자열이 있으면 true를 
+    // 반환해주는 함수 checkSpam(str)을 만들어보세요. 
+    // 해당 문자열이 없으면 false를 반환하면 됩니다.
+    // 함수는 대·소문자 관계없이 해당 단어를 걸러주어야 합니다.
+
+    function checkSpam(str) {
+      // 탐색할 문자열을 모두 소문자로 변환
+      let strLower = str.LowrCase();
+    }
+    // 문자열에 아래의 키워드가 포함되어있는지
+    for (let keyword of ['viagra', 'xxxxx']) {
+      if (strLower.includes(keyword)) {
+        return true;
+      }
+    }
+
+    return false;
+
+    consol.log(checkSpam('buy ViAgRA now'));
+    consol.log(checkSpam('free xxxxx'));
+    consol.log(checkSpam("innocent rabbit"));
+
+  </script>
+</body>
+
+</html>

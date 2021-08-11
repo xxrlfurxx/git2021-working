@@ -1,0 +1,30 @@
+<html>
+
+<body>
+  <script>
+    // alert(extractCurrencyValue('$120') === 120); // true
+
+    //     달러 표시가 먼저 나오고 그 뒤에 숫자가 나오는 문자열 "$120"가 있다고 가정해 봅시다.
+
+    // 위와 같은 문자열에서 숫자만 뽑아내는 함수 extractCurrencyValue(str)를 작성해 봅시다.
+
+    function extractCurrencyValue(str) {
+      let reslt = "";
+
+      // 한글자씩 isNaN 테스트
+      for (let chr of str) {
+        // 숫자변환 후 NaN이 아닌 글자만 결과 문자열에 추가함
+        if (!isNaN(+chr)) {
+          reslt += chr;
+        }
+      }
+      return +reslt;
+    }
+    console.log(extractCurrencyValue('$120'));
+    console.log(extractCurrencyValue('$120') === 120); // true
+
+
+  </script>
+</body>
+
+</html>
