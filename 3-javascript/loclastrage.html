@@ -1,0 +1,30 @@
+<html>
+
+<body>
+  <textarea id="txt-area placeholder=" Write here">
+  </textarea>
+  <br>
+  <button id="remove" type="button">clear</button>
+  <script>
+    const txt = document.querySelector("textarea");
+    const btn = document.querySelector("button");
+
+    // 텍스트 에리어에 입력할 때마다 이벤트 처리
+    txt.addEventListener("keyup", () => {
+      // 로컬 스토리지에 저장
+      localStorage.setItem("memo", txt.value);
+
+    })
+
+    // clear 버튼을 클릭했을 때 텍스트에리어 및 로컬 스토리지 값 삭제
+    btn.addEventListener("click", () => {
+      txt, value = "";
+      localStorage.removeItem(StorageKey);
+    })
+    // 스크립트 실행될 때 스토라지 값 가져오기
+    // 페이지 로딩이 됐을 때 (스크립트가 가장 하단에 있다는 전제하에)
+    txt.value = localStorage.getItem(StorageKey);
+  </script>
+</body>
+
+</html>
