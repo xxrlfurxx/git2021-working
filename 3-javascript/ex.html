@@ -1,16 +1,19 @@
 <html>
 
 <body>
+  <button id="btn-add">입력</button>
+
+
   <script>
-    for (i = 0; i < 10; i++) {
-      if (i % 2 == 0)
-        console.log(i);
+
+    const btnadd = document.querySelector("#btn-add");
+
+    btnadd.addEventListener("click", add);
+
+    function add(event) {
+
+      alert("입력");
     }
-
-
-
-
-
   </script>
 </body>
 
