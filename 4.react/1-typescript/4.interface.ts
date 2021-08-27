@@ -9,6 +9,11 @@ interface User {
 }
 
 function printName(obj: User) {
+  // 삭제한 속성 반복문에서 안나옴
+  Object.keys(obj).forEach((key) => {
+    console.log(key);
+  });
+  // ??????????
   console.log(obj.firstname + " " + obj.lastname);
 }
 
@@ -16,7 +21,7 @@ function printName(obj: User) {
 // number[], string[], User[]
 function printNames(arr: User[]) {
   for (let obj of arr) {
-    console.log(obj.firstname + " " + obj.lastname);
+    // console.log(obj.firstname + " " + obj.lastname);
   }
 }
 
@@ -24,6 +29,12 @@ const user: User = {
   firstname: "John",
   // lastname: "Smith",
 };
+
+// optional 필드는 delete 가능함
+delete user.lastname;
+
+// 속성 추가 불가함
+// user.phone = 01012345678;
 
 const users: User[] = [
   { firstname: "John", lastname: "Smith" },
