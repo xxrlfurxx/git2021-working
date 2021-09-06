@@ -1,17 +1,22 @@
-@import "./style/bootstarp-custom.scss";
-@import "./style/app.variables.scss";
+@import "./styles/bootstarp-custom.scss";
+@import "./styles/app.variables.scss";
 
 .app-bar {
   height: $app-bar-height;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-.drawer-munu {
-  width: $drawer-munu-width;
-  height: "100vh"; 
+.drawer-menu {
+  width: $drawer-menu-width;
+  height: 100vh;
   top: $app-bar-height;
 }
 
-.cotent-container {
+.content-container {
   padding: 1rem;
-  margin-left: $drawer-munu-width;
+  margin-left: $drawer-menu-width;
+  margin-top: $app-bar-height;
 }

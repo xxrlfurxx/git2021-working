@@ -6,8 +6,12 @@
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { Provider } from "react-redux"; // react 앱에 redux store를 제공해줌
+import { store } from "./store"; // redux store
 
 import Home from "./domain/Home";
+import Profile from "./domain/profile/Profile";
+
 
 // SPA(Single Page Application)
 // : 페이지 파일이 1개, index.html
@@ -19,48 +23,68 @@ import Home from "./domain/Home";
 // 컴포넌트를 방문하는 시점에 로딩함
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/Contact"));
+const Contact = lazy(() => import("./domain/contact/Contact"));
+const Photo = lazy(() => import("./domain/photo/Photo"));
+const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
+
 
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
-    <Router>
-      {/* main container */}
-      <div className="mx-auto">
-        <header className="app-bar bg-primary shadow">App Bar</header>
-        <nav className="drawer-munu position-fixed bg-light shadow">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/todo">Todo</Link>
-            </li>
-            <li>
-              <Link to="/feeds">Feeds</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-        <main className="cotent-container">
-          {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
-          {/* fallback={로딩중에 보여줄 컴포넌트} */}
-          <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              {/* Switch 영역에 컴포넌트가 로딩됨 */}
+    <Provider store={store}>
+      <Router>
+        {/* main container */}
+        <div className="mx-auto">
+          <header className="app-bar position-fixed d-flex justify-content-end bg-primary shadow">
+            <Profile />
+          </header>
+          <nav className="drawer-menu position-fixed bg-light shadow-sm">
 
-              {/* 해당 경로에 대해서 로딩할 컴포넌트 목록을 작성 */}
-              <Route path="/" component={Home} exact />
-              <Route path="/todo" component={Todo} />
-              <Route path="/feeds" component={Feed} />
-              <Route path="/contact" component={Contact} />
-            </Switch>
-          </Suspense>
-        </main>
-      </div>
-    </Router>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/todo">Todo</Link>
+              </li>
+              <li>
+                <Link to="/feeds">Feeds</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link to="/photos">Photos</Link>
+              </li>
+            </ul>
+          </nav>
+          <main className="content-container">
+            {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
+            {/* fallback={로딩중에 보여줄 컴포넌트} */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                {/* Switch 영역에 컴포넌트가 로딩됨 */}
+
+                {/* 해당 경로에 대해서 로딩할 컴포넌트 목록을 작성 */}
+                {/* exact: 속성은 true/false, 경로가 정확히 일치할때만 */}
+                <Route path="/" component={Home} exact />
+                <Route path="/todo" component={Todo} />
+                <Route path="/feeds" component={Feed} />
+                <Route path="/contact" component={Contact} />
+                <Route path="/photos" component={Photo} exact />
+                <Route path="/photos/create" component={PhotoCreate} />
+                <Route path="/photos/detail/:id" component={PhotoDetail} />
+                {/* id라는 매개변수를 url 경로에 넘김, path parameter */}
+                <Route path="/photos/edit/:id" component={PhotoEdit} />
+
+              </Switch>
+            </Suspense>
+          </main>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

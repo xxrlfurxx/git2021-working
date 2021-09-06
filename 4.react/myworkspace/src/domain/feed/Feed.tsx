@@ -5,16 +5,32 @@ import produce from "immer";
 // import { getTimeString } from "../common/lib/string";
 import FeedEditModal from "./FeedEditModal";
 import { FeedState } from "./type/index2";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import style from "../profile/Profile.module.scss";
 
 const getTimeString = (unixtime: number) => {
+  const now = new Date(); // 현재날짜-시간객체
+  // 1초: 1000
+  // 1분: 60 * 1000
+  // 1시간: 60 * 60 * 1000
+  // 1일: 24 * 60 * 60 * 1000
+  const day = 24 * 60 * 60 * 1000
+
   // Locale: timezone, currency 등
   // js에서는 브라우저의 정보를 이용함
   const dateTime = new Date(unixtime);
-  return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
+
+  // 현재시간보다 24시간 이전이면 날짜를 보여주고
+  // 현재시간보다 24시간 미만이면 시간을 보여줌
+  return unixtime - now.getTime() >= day
+    ? dateTime.toLocaleDateString()
+    : dateTime.toLocaleTimeString()
 };
 
 const Feed = () => {
-  console.log("--feedwithmodal--");
+  const profile = useSelector((state: RootState) => state.profile);
+
   const [feedList, setFeedList] = useState<FeedState[]>([]);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -140,6 +156,10 @@ const Feed = () => {
       <div className="mt-3">
         {feedList.map((item) => (
           <div className="card mt-1" key={item.id}>
+            <div className="card-header">
+              <img src={item.content} className={`${style["thumb"]}`} alt={profile.username} />
+              <span className="mt-2">{profile.username}</span>
+            </div>
             {item.fileType &&
               (item.fileType?.includes("image") ? (
                 <img
