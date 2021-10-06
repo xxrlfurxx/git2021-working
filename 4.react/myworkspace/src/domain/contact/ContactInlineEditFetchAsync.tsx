@@ -1,18 +1,28 @@
-import { useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import { useEffect, useRef, useState } from "react";
+import Alert from "../../components/alert/Alert";
+import axios from "axios";
 
 import produce from "immer";
 
-interface ContactState {
+interface ContactItemState {
   id: number,
-  memo: string | undefined
-  memo1: string | undefined
-  memo2: string | undefined
+  name: string | undefined
+  phone: string | undefined
+  email: string | undefined
   isEdit?: boolean;
 }
 
+interface ContactItemReponse {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+}
+
 const Contact = () => {
-  const [contactList, setContactList] = useState<ContactState[]>([]);
+  const [contactList, setContactList] = useState<ContactItemState[]>([]);
+  // 데이터 로딩처리 여부를 표시
+  const [isLoding, setLoding] = useState<boolean>(true);
 
   const [isError, setIsError] = useState(false);
 
@@ -21,6 +31,32 @@ const Contact = () => {
   const input1Ref2 = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const trRef = useRef<HTMLTableRowElement>(null);
+
+
+  const fetchData = async () => {
+    const res = await fetch("http://localhost:8080/todos");
+    const data: ContactItemReponse[] = await res.json();
+    // 서버로부터 받은 데이터를 state 객체로 변환함
+    const contacts = data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      phone: item.phone,
+      email: item.email,
+    })) as ContactItemState[];
+
+    setLoding(false); // 로딩중 여부 state 업데이트
+    setContactList(contacts); // contact state 업데이트
+
+    console.log("--2. await fetch complete--");
+  };
+
+  useEffect(() => {
+    console.log("--mounted--");
+    // 백엔드에서 데이터를 받아올 것임
+    // ES8 style로 async-await 기법을 이용해서 데이터를 조회해옴
+    fetchData();
+    console.log("--3. complete--");
+  }, []);
 
 
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
@@ -44,11 +80,11 @@ const Contact = () => {
       return;
     }
 
-    const contact: ContactState = {
+    const contact: ContactItemState = {
       id: contactList.length > 0 ? contactList[0].id + 1 : 1,
-      memo: inputRef.current?.value,
-      memo1: input1Ref1.current?.value,
-      memo2: input1Ref2.current?.value,
+      name: inputRef.current?.value,
+      phone: input1Ref1.current?.value,
+      email: input1Ref2.current?.value,
     };
 
     setContactList(
@@ -93,9 +129,9 @@ const Contact = () => {
       produce((state) => {
         const item = state.find((item) => item.id === id);
         if (item) {
-          item.memo = input?.value;
-          item.memo1 = input?.value;
-          item.memo2 = input?.value;
+          item.name = input?.value;
+          item.phone = input?.value;
+          item.email = input?.value;
           item.isEdit = false;
         }
       })
@@ -180,17 +216,17 @@ const Contact = () => {
           {contactList.map((item, index) => (
             <tr ref={trRef} key={item.id}>
               <td>#</td>
-              {!item.isEdit && <td>{item.memo}</td>}
-              {!item.isEdit && <td>{item.memo1}</td>}
-              {!item.isEdit && <td>{item.memo2}</td>}
+              {!item.isEdit && <td>{item.name}</td>}
+              {!item.isEdit && <td>{item.phone}</td>}
+              {!item.isEdit && <td>{item.email}</td>}
               {item.isEdit &&
-                <td><input type="text" defaultValue={item.memo} /></td>
+                <td><input type="text" defaultValue={item.name} /></td>
               }
               {item.isEdit &&
-                <td><input type="text" defaultValue={item.memo1} /> </td>
+                <td><input type="text" defaultValue={item.phone} /> </td>
               }
               {item.isEdit &&
-                <td><input type="text" defaultValue={item.memo2} /> </td>
+                <td><input type="text" defaultValue={item.email} /> </td>
               }
               <td>
                 {!item.isEdit && (

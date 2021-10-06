@@ -44,6 +44,8 @@ $border-radius-sm: 0;
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/dropdown";
 @import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/pagination";
 /* ---------------------------------------------- */
 @import "~bootstrap/scss/helpers";
 
@@ -51,4 +53,5 @@ $border-radius-sm: 0;
 @import "~bootstrap/scss/utilities/api";
 
 // Icon
+// npm instal bootstrap-icons
 @import "~bootstrap-icons/font/bootstrap-icons.css";

@@ -9,8 +9,12 @@ import { Suspense, lazy } from "react";
 import { Provider } from "react-redux"; // react 앱에 redux store를 제공해줌
 import { store } from "./store"; // redux store
 
-import Home from "./domain/Home";
+import Home from "./domain/home/Home";
 import Profile from "./domain/profile/Profile";
+import Progress from "./components/Progress/Progress";
+import AlertStack from "./components/alert/AlertStack";
+
+
 
 
 // SPA(Single Page Application)
@@ -21,9 +25,13 @@ import Profile from "./domain/profile/Profile";
 
 // Lazy-Loading 처리
 // 컴포넌트를 방문하는 시점에 로딩함
-const Todo = lazy(() => import("./domain/todo/Todo"));
+const Todo = lazy(() => import("./domain/todo/TodoInlineEdit"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
+// const Contact = lazy(() => import("./domain/contact/ContactInlineEdit"));
 const Contact = lazy(() => import("./domain/contact/Contact"));
+const ContactCreate = lazy(() => import("./domain/contact/ContactCreate"));
+const ContactDetail = lazy(() => import("./domain/contact/ContactDetail"));
+const ContactEdit = lazy(() => import("./domain/contact/ContactEdit"));
 const Photo = lazy(() => import("./domain/photo/Photo"));
 const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
 const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
@@ -53,7 +61,7 @@ function App() {
                 <Link to="/feeds">Feeds</Link>
               </li>
               <li>
-                <Link to="/contact">Contact</Link>
+                <Link to="/contacts">Contact</Link>
               </li>
               <li>
                 <Link to="/photos">Photos</Link>
@@ -72,7 +80,10 @@ function App() {
                 <Route path="/" component={Home} exact />
                 <Route path="/todo" component={Todo} />
                 <Route path="/feeds" component={Feed} />
-                <Route path="/contact" component={Contact} />
+                <Route path="/contacts" component={Contact} exact />
+                <Route path="/contacts/create" component={ContactCreate} />
+                <Route path="/contacts/detail/:id" component={ContactDetail} />
+                <Route path="/contacts/edit/:id" component={ContactEdit} />
                 <Route path="/photos" component={Photo} exact />
                 <Route path="/photos/create" component={PhotoCreate} />
                 <Route path="/photos/detail/:id" component={PhotoDetail} />
@@ -81,10 +92,14 @@ function App() {
 
               </Switch>
             </Suspense>
+
+            <Progress />
+            <AlertStack />
           </main>
         </div>
       </Router>
     </Provider>
+
   );
 }
 
