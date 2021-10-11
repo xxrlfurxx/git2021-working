@@ -13,6 +13,7 @@ import Home from "./domain/home/Home";
 import Profile from "./domain/profile/Profile";
 import Progress from "./components/Progress/Progress";
 import AlertStack from "./components/alert/AlertStack";
+import EventMessage from "./components/EventMessage";
 
 
 
@@ -95,6 +96,7 @@ function App() {
 
             <Progress />
             <AlertStack />
+            <EventMessage />
           </main>
         </div>
       </Router>
