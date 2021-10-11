@@ -13,10 +13,10 @@ public interface AirSigunguHourRepository
 
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 
-	// findByÇÊµå¸í
-	// ÇÊµå¸íÀº Pacal-Case·Î ´ë¼Ò¹®ÀÚ Àß ¸ÂÃß¾î¾ßÇÔ
+	// findByí•„ë“œëª…
+	// í•„ë“œëª…ì€ Pacal-Caseë¡œ ëŒ€ì†Œë¬¸ìž ìž˜ ë§žì¶”ì–´ì•¼í•¨
 
-	// ¿¹) ÇÊµå¸í cityName
+	// ì˜ˆ) í•„ë“œëª… cityName
 	// findByCityName
 	// -> WHERE city_name = :city ORDER BY ... LIMIT ...
 	List<AirSigunguHour> findByCityName(Pageable page, String city);

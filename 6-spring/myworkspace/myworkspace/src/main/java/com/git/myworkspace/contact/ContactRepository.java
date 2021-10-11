@@ -3,15 +3,15 @@ package com.git.myworkspace.contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-// contact Å×ÀÌºí¿¡ Á¢±ÙÇÏ´Â °´Ã¼
+// contact í…Œì´ë¸”ì— ì ‘ê·¼í•˜ëŠ” ê°ì²´
 
-//PhotoRepository -¢¹ JpaRepository -¢¹ PagingAndSortingRepository -¢¹ CrudRepository
-//JpaRepository¿¡´Â µ¥ÀÌÅÍ Ã³¸®¸¦ À§ÇÑ ±âº»ÀûÀÎ ¸Ş¼­µåµéÀÌ ¼±¾ğµÇ¾îÀÖÀ½
+//PhotoRepository -â–· JpaRepository -â–· PagingAndSortingRepository -â–· CrudRepository
+//JpaRepositoryì—ëŠ” ë°ì´í„° ì²˜ë¦¬ë¥¼ ìœ„í•œ ê¸°ë³¸ì ì¸ ë©”ì„œë“œë“¤ì´ ì„ ì–¸ë˜ì–´ìˆìŒ
 //JpaRepository<Photo, Long>
-//JpaRepository<¿£Æ¼Æ¼Å¸ÀÔ, idÅ¸ÀÔ>
-//¿£Æ¼Æ¼(SE, µ¥ÀÌÅÍ°´Ã¼) == Å×ÀÌºí(DB, µ¥ÀÌÅÍ°´Ã¼)
+//JpaRepository<ì—”í‹°í‹°íƒ€ì…, idíƒ€ì…>
+//ì—”í‹°í‹°(SE, ë°ì´í„°ê°ì²´) == í…Œì´ë¸”(DB, ë°ì´í„°ê°ì²´)
 
-//contact Å×ÀÌºí¿¡ Á¢±ÙÇÒ ¼ö ÀÖ´Â ±âº»ÀûÀÎ ¸Ş¼­µåµéÀ» »ç¿ëÇÒ ¼ö ÀÖÀ½
+//contact í…Œì´ë¸”ì— ì ‘ê·¼í•  ìˆ˜ ìˆëŠ” ê¸°ë³¸ì ì¸ ë©”ì„œë“œë“¤ì„ ì‚¬ìš©í•  ìˆ˜ ìˆìŒ
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {

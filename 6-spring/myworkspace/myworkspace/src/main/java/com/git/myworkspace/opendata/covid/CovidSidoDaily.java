@@ -1,5 +1,6 @@
 package com.git.myworkspace.opendata.covid;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -17,18 +18,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(indexes = @Index(name = "idx_covid_sido", columnList = "gubun"))
-@IdClass(CovidSidoId.class)
-public class CovidSido {
+@IdClass(CovidSidoDailyId.class)
+public class CovidSidoDaily {
 
 	@Id
 	private String stdDay;
 	@Id
+	@Column(columnDefinition = "varchar(225) collate \"ko_KR.utf8\"")
 	private String gubun;
-	// °ª
-	private String defCnt;
-	private String incDec;
-	private String overFlowCnt;
-	private String localOccCnt;
-	private String isolIngCnt;
-	private String deathCnt;
+	// ê°’
+	private Integer overFlowCnt;
+	private Integer localOccCnt;
+
 }

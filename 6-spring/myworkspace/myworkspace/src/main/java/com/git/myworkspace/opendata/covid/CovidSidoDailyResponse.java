@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class CovidSidoResponse {
+public class CovidSidoDailyResponse {
 	private Response response;
 
 	@Data
@@ -58,13 +58,13 @@ public class CovidSidoResponse {
 	// "incDec":8,
 	// "updateDt":null,
 	// "createDt":"2021-10-05 09:55:20.397",
-	// "gubun":"°Ë¿ª",
+	// "gubun":"Â°Ã‹Â¿Âª",
 	// "gubunEn":"Lazaretto",
 	// "deathCnt":15,
-	// "stdDay":"2021³â 10¿ù 05ÀÏ 00½Ã",
+	// "stdDay":"2021Â³Ã¢ 10Â¿Ã¹ 05Ã€Ã 00Â½Ãƒ",
 	// "qurRate":"-",
 	// "overFlowCnt":8,
-	// "gubunCn":"Ì°×îÏ¡",
+	// "gubunCn":"ÃŒÂ°Ã—Ã®ÃÂ¡",
 	// "isolIngCnt":196,
 	// "seq":12511
 	// },

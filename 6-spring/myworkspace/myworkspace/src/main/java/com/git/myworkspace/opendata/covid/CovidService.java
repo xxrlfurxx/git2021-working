@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -20,77 +21,82 @@ public class CovidService {
 
 	private final String SERVICE_KEY = "yDpU2UqOZf2Neb%2FxmD4yBeY%2Ba4HYU1rPbCd4SjXYOQPpHeH3mRbHx0qhXx69kyX1lK%2FwFUMChtvjEO57UNpbOg%3D%3D";
 
-	private CovidSidoRepository repo;
+	private CovidSidoDailyRepository repo;
 
 	@Autowired
-	public CovidService(CovidSidoRepository repo) {
+	public CovidService(CovidSidoDailyRepository repo) {
 		this.repo = repo;
 
 	}
-	// ½Ãµµº° ÄÚ·Î³ª Á¶È¸
+	// ì‹œë„ë³„ ì½”ë¡œë‚˜ ì¡°íšŒ
 	@Scheduled(cron = " 0 10 10 * * *")
+
+	@CacheEvict(value = "covid-current", allEntries = true)
 	@SuppressWarnings("deprecation")
 	public void requestCovidSido() throws IOException {
 		System.out.println(new Date().toLocaleString());
 
-		/* --------------------- µ¥ÀÌÅÍ ¿äÃ»ÇÏ°í XML ¹Ş¾Æ¿À±â ---------------- */
+		/* --------------------- ë°ì´í„° ìš”ì²­í•˜ê³  XML ë°›ì•„ì˜¤ê¸° ---------------- */
 		// http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=yDpU2UqOZf2Neb%2FxmD4yBeY%2Ba4HYU1rPbCd4SjXYOQPpHeH3mRbHx0qhXx69kyX1lK%2FwFUMChtvjEO57UNpbOg%3D%3D&pageNo=1&numOfRows=10
-		// ¹®ÀÚ¿­À» ºô´õ¹æ½ÄÀ¸·Î »ı¼ºÇÏ´Â Å¬·¡½º
+		// ë¬¸ìì—´ì„ ë¹Œë”ë°©ì‹ìœ¼ë¡œ ìƒì„±í•˜ëŠ” í´ë˜ìŠ¤
 
-		// 1. ¿äÃ» URL ¸¸µé±â
+		// 1. ìš”ì²­ URL ë§Œë“¤ê¸°
 		StringBuilder builder = new StringBuilder();
-		builder.append("http://openapi.data.go.kr/openapi"); // È£½ºÆ®/°ÔÀÌÆ®¿şÀÌ
-		builder.append("/service/rest/Covid19"); // ¼­ºñ½º
-		builder.append("/getCovid19SidoInfStateJson"); // ±â´É(½Ãµµ)
-		builder.append("?serviceKey=" + SERVICE_KEY); // ¼­ºñ½º Å°
-		builder.append("&pageNo=1&numOfRows=19"); // 17½Ãµµ +
+		builder.append("http://openapi.data.go.kr/openapi"); // í˜¸ìŠ¤íŠ¸/ê²Œì´íŠ¸ì›¨ì´
+		builder.append("/service/rest/Covid19"); // ì„œë¹„ìŠ¤
+		builder.append("/getCovid19SidoInfStateJson"); // ê¸°ëŠ¥(ì‹œë„)
+		builder.append("?serviceKey=" + SERVICE_KEY); // ì„œë¹„ìŠ¤ í‚¤
+		builder.append("&pageNo=1&numOfRows=19"); // 17ì‹œë„ +
 
 		System.out.println(builder.toString());
 
-		// 2. URL °´Ã¼ »ı¼º
+		// 2. URL ê°ì²´ ìƒì„±
 		URL url = new URL(builder.toString());
 
-		// 3. Http Á¢¼Ó »ı¼º
+		// 3. Http ì ‘ì† ìƒì„±
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-		// 4. byte[]¹è¿­·Î µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿È
+		// 4. byte[]ë°°ì—´ë¡œ ë°ì´í„°ë¥¼ ì½ì–´ì˜´
 		byte[] result = con.getInputStream().readAllBytes();
 
-		// 5. ¹®ÀÚ¿­ º¯È¯
+		// 5. ë¬¸ìì—´ ë³€í™˜
 		String data = new String(result, "UTF-8");
 		System.out.println(data);
-		/* --------------------- µ¥ÀÌÅÍ ¿äÃ»ÇÏ°í XML ¹Ş¾Æ¿À±â ³¡---------------- */
+		/* --------------------- ë°ì´í„° ìš”ì²­í•˜ê³  XML ë°›ì•„ì˜¤ê¸° ë---------------- */
 
-		/* ---------------- XML -> JSON -> Object(Java) ½ÃÀÛ -------------- */
-		// XML(¹®ÀÚ¿­) -> JSON(°´Ã¼)
+		/* ---------------- XML -> JSON -> Object(Java) ì‹œì‘ -------------- */
+		// XML(ë¬¸ìì—´) -> JSON(ê°ì²´)
 		JSONObject jsonObj = XML.toJSONObject(data);
-		// JSON(°´Ã¼) -> JSON(¹®ÀÚ¿­)
+		// JSON(ê°ì²´) -> JSON(ë¬¸ìì—´)
 		String json = jsonObj.toString();
 		// System.out.println(json);
 
-		// JSON(¹®ÀÚ¿­) -> Java(object)
-		CovidSidoResponse response = new Gson().fromJson(json,
-				CovidSidoResponse.class);
+		// JSON(ë¬¸ìì—´) -> Java(object)
+		CovidSidoDailyResponse response = new Gson().fromJson(json,
+				CovidSidoDailyResponse.class);
 		System.out.println(response);
 
-		/* --------------------- XML -> JSON -> Object(Java) ³¡ -------------- */
+		/* --------------------- XML -> JSON -> Object(Java) ë -------------- */
 
-		/* ----------------ÀÀ´ä °´Ã¼ -> ¿£Æ¼Æ¼ ½ÃÀÛ ------------------ */
-		List<CovidSido> list = new ArrayList<CovidSido>();
-		for (CovidSidoResponse.Item item : response.getResponse().getBody()
+		/* ----------------ì‘ë‹µ ê°ì²´ -> ì—”í‹°í‹° ì‹œì‘ ------------------ */
+		List<CovidSidoDaily> list = new ArrayList<CovidSidoDaily>();
+		for (CovidSidoDailyResponse.Item item : response.getResponse().getBody()
 				.getItems().getItem()) {
-			CovidSido record = CovidSido.builder().stdDay(item.getStdDay())
-					.gubun(item.getGubun()).defCnt(item.getDefCnt())
-					.incDec(item.getIncDec()).overFlowCnt(item.getOverFlowCnt())
-					.localOccCnt(item.getLocalOccCnt())
-					.isolIngCnt(item.getIsolIngCnt())
-					.deathCnt(item.getDeathCnt()).build();
+			CovidSidoDaily record = CovidSidoDaily.builder().stdDay(item.getStdDay())
+					.gubun(item.getGubun())
+					.overFlowCnt(item.getOverFlowCnt().isEmpty()
+							? null
+							: Integer.valueOf(item.getOverFlowCnt()))
+					.localOccCnt(item.getLocalOccCnt().isEmpty()
+							? null
+							: Integer.valueOf(item.getLocalOccCnt()))
+					.build();
 			list.add(record);
 		}
-		/* ----------------ÀÀ´ä °´Ã¼ -> ¿£Æ¼Æ¼ ³¡ ------------------ */
+		/* ----------------ì‘ë‹µ ê°ì²´ -> ì—”í‹°í‹° ë ------------------ */
 
-		/* ----------------¿£Æ¼Æ¼°´Ã¼ ÀúÀå ½ÃÀÛ ------------------ */
+		/* ----------------ì—”í‹°í‹°ê°ì²´ ì €ì¥ ì‹œì‘ ------------------ */
 		repo.saveAll(list);
-		/* ----------------¿£Æ¼Æ¼°´Ã¼ ÀúÀå ³¡ ------------------ */
+		/* ----------------ì—”í‹°í‹°ê°ì²´ ì €ì¥ ë ------------------ */
 	}
 }

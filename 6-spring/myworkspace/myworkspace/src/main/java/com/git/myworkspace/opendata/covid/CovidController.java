@@ -1,11 +1,50 @@
 package com.git.myworkspace.opendata.covid;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/opendata/covid")
 public class CovidController {
+	private CovidSidoDailyRepository repo;
+	private final String cachName = "covid-current";
 
-	// 1. Àü±¹ µ¥ÀÌÅÍ Á¶È¸
-	// page size 19°³, Á¤·ÄÀº std_day desc
+	@Autowired
+	public CovidController(CovidSidoDailyRepository repo) {
+		this.repo = repo;
+		setGubuns();
+	}
 
-	// 2. Æ¯Á¤ ½ÃµµÀÇ µ¥ÀÌÅÍ Á¶È¸
-	// °Ë»öÁ¶°Ç¿¡ gubun, page size(limit)¸¦ 7, Á¤·ÄÀº stdDay desc
-	// ¿¹) WHERE gubun=¼­¿ï ORDER BY std_day Des LIMIT 7;
+	// @Cacheable(value = "ìºì‹œì´ë¦„", key = "í‚¤ì´ë¦„")
+	@Cacheable(value = cachName, key = "'all'")
+	@GetMapping(value = "/gubun/current")
+	public List<CovidSidoDaily> getCovidSidocurrent() {
+		return repo
+				.findAll(PageRequest.of(0, 19, Sort.by("std_day").descending()))
+				.toList();
+	}
+	// 1. ì „êµ­ ë°ì´í„° ì¡°íšŒ
+	// page size 19ê°œ, ì •ë ¬ì€ std_day desc
+
+	// 2. íŠ¹ì • ì‹œë„ì˜ ë°ì´í„° ì¡°íšŒ
+	// ê²€ìƒ‰ì¡°ê±´ì— gubun, page size(limit)ë¥¼ 7, ì •ë ¬ì€ stdDay desc
+	// ì˜ˆ) WHERE gubun=ì„œìš¸ ORDER BY std_day Des LIMIT 7;
+	@Cacheable(value = cachName, key = "#city")
+	@GetMapping(value = "/gubun/current/{city}")
+	public List<CovidSidoDaily> getCovidSidoCurrent(@PathVariable String city) {
+		Pageable page = PageRequest.of(0, 7, Sort.by("std_day").descending());
+		return repo.findByGubun(page, city);
+	}
+
+	private void setGubuns() {
+	}
 }

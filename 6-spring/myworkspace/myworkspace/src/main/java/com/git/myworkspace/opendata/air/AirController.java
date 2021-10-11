@@ -27,21 +27,21 @@ public class AirController {
 		this.repo = repo;
 	}
 
-	// ÃÖ±Ù 25°³ÀÇ µ¥ÀÌÅÍ¸¦ Á¶È¸
-	// ¿¹) 25°³ ±¸", "");ÀÇ °¡Àå ÃÖ±Ù ½Ã°£ÀÇ µ¥ÀÌÅÍ
+	// ìµœê·¼ 25ê°œì˜ ë°ì´í„°ë¥¼ ì¡°íšŒ
+	// ì˜ˆ) 25ê°œ êµ¬", "");ì˜ ê°€ì¥ ìµœê·¼ ì‹œê°„ì˜ ë°ì´í„°
 
-	// @Cacheable(value = "Ä³½ÃÀÌ¸§", key = "Å°ÀÌ¸§")
-	// !!Ä³½Ã´Â ¸Ş¼­µåÀÇ ¸®ÅÏ °´Ã¼°¡ Ä³½ÃµÇ´Â °ÍÀÓ
+	// @Cacheable(value = "ìºì‹œì´ë¦„", key = "í‚¤ì´ë¦„")
+	// !!ìºì‹œëŠ” ë©”ì„œë“œì˜ ë¦¬í„´ ê°ì²´ê°€ ìºì‹œë˜ëŠ” ê²ƒì„
 	@Cacheable(value = cachName, key = "'all'")
 	@GetMapping(value = "/sido/current")
 	public List<AirSigunguHour> getAirSidoCurrent() {
 
-		// ½Ã°£°ªÀ¸·Î ¿ªÁ¤·Ä, ½Ã°£°ªÀÌ °°´Ù¸é ½Ãµµ±¸±º¸íÀ¸·Î ¼øÁ¤·Ä
+		// ì‹œê°„ê°’ìœ¼ë¡œ ì—­ì •ë ¬, ì‹œê°„ê°’ì´ ê°™ë‹¤ë©´ ì‹œë„êµ¬êµ°ëª…ìœ¼ë¡œ ìˆœì •ë ¬
 		// select * from air_sigungu_hour ash
 		// order by data_time desc, city_name asc
 		// limit 25;
 
-		// ¿©·¯°³ÀÇ ÇÊµå·Î Á¤·Ä
+		// ì—¬ëŸ¬ê°œì˜ í•„ë“œë¡œ ì •ë ¬
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Sort.Direction.DESC, "dataTime"));
 		orders.add(new Order(Sort.Direction.ASC, "cityName"));
@@ -49,12 +49,12 @@ public class AirController {
 		return repo.findAll(PageRequest.of(0, 25, Sort.by(orders))).toList();
 	}
 
-	// Æ¯Á¤ ±¸", "");ÀÇ ÃÖ±Ù 12°³ÀÇ µ¥ÀÌÅÍ¸¦ Á¶È¸
-	// ¿¹) °­³²±¸", "");, ÃÖ±Ù 12°³(12½Ã°£)ÀÇ µ¥ÀÌÅÍ
-	// ¿¹) WHERE city_name='°­³²±¸", "");' ORDER BY data_time DESC LIMIT 12;
+	// íŠ¹ì • êµ¬", "");ì˜ ìµœê·¼ 12ê°œì˜ ë°ì´í„°ë¥¼ ì¡°íšŒ
+	// ì˜ˆ) ê°•ë‚¨êµ¬", "");, ìµœê·¼ 12ê°œ(12ì‹œê°„)ì˜ ë°ì´í„°
+	// ì˜ˆ) WHERE city_name='ê°•ë‚¨êµ¬", "");' ORDER BY data_time DESC LIMIT 12;
 
-	// spel Ç¥±â¹ı: #city - String city
-	// ¸Ş¼­µåÀÇ ¸Å°³º¯¼ö¿Í ¿¬°á
+	// spel í‘œê¸°ë²•: #city - String city
+	// ë©”ì„œë“œì˜ ë§¤ê°œë³€ìˆ˜ì™€ ì—°ê²°
 
 	@Cacheable(value = cachName, key = "#city")
 	@GetMapping(value = "/sido/current/{city}")
