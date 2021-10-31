@@ -1,34 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+_11/1 시작_
 
-## Getting Started
+# 협업 툴 제작 프로젝트
 
-First, run the development server:
+목표 : 11월 21일까지 테스크 보드 완성
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<br>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 메뉴 구조도
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<img src=https://user-images.githubusercontent.com/82828382/139599126-178dadd8-a76b-4b3a-89d6-d514ebcc6284.png width=80%>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 와이어 프레임
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<img src=https://user-images.githubusercontent.com/82828382/139599139-5c732c9a-43a2-4c7b-ba06-2621b34dbe85.png width=80%>
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 10/30
+  - next.js 로 프론트엔드 작업환경 구축
+    - ui 설계
+    - css 미디어 쿼리
+    - light/dark 모드 색상 선택
+  - 어제 백신맞아서 쥰내 피곤함
