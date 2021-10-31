@@ -1,0 +1,74 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-bar {
+  background: rgb(247, 246, 243);
+  height: 100px;
+  width: 100%;
+  /* display: flex; */
+  color: rgba(25, 23, 17, 0.6);
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  grid-area: header;
+}
+.nav-bar {
+  background: rgb(247, 246, 243);
+  width: 100%;
+  /* display: flex; */
+  color: rgba(25, 23, 17, 0.6);
+  font-weight: 600;
+  font-size: 20px;
+  /* flex-direction: column; */
+  grid-area: nav;
+  border-width: 3px;
+  border-color: black;
+}
+.contents {
+  grid-area: contents;
+}
+
+.wrap {
+  display: grid;
+  margin: 0 auto;
+  grid-template-areas:
+    "header"
+    "nav"
+    "contents";
+}
+/* medium */
+@media (min-width: 768px) {
+  .wrap {
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "contents contents";
+  }
+}
+/* large */
+@media (min-width: 1200px) {
+  .wrap {
+    width: 1200px;
+    grid-template-columns: 3fr 7fr 2fr;
+    grid-template-areas:
+      "header  header  header"
+      "nav  contents  contents"
+      "nav  contents  contents"
+      "nav  contents  contents";
+  }
+}
