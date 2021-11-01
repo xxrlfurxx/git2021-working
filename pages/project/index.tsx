@@ -8,7 +8,7 @@ function Project() {
     <>
       <div className="mb-2"></div>
       <div style={{ width: "80vw" }} className="mx-auto">
-        <h2 className="text-center">프로젝트 목록</h2>
+        <h2 className="text-center">프로젝트 목록d</h2>
         <div className="d-flex justify-content-end mb-2">
           <button
             className="btn btn-primary"
@@ -22,7 +22,7 @@ function Project() {
             <thead>
               <tr>
                 <th scope="col" style={{ width: "5%" }}>
-                  
+                  No
                 </th>
                 <th scope="col" style={{ width: "20%" }}>
                   프로젝트명
@@ -55,7 +55,7 @@ function Project() {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+
               </tr>
             </tbody>
             <tfoot>
