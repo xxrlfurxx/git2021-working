@@ -1,4 +1,4 @@
-function create() {
+function Create() {
   return (
     <>
       <div>create</div>
@@ -6,4 +6,4 @@ function create() {
   );
 }
 
-export default create;
+export default Create;

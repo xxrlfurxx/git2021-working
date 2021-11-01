@@ -8,20 +8,26 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <body>
       <div className="wrap">
-        <header className="app-bar">
+        <header className="app-bar shadow">
           <h1>협업툴 이름(미정)</h1>
         </header>
-        <nav className="nav-bar">
+        <nav className="nav-bar shadow">
           <h2>
             <Link href="/">Main</Link>
           </h2>
           <ul>
-            <li>Feeds</li>
-            <li>Project</li>
             <li>
-              <Link href="/boards">Task Board</Link>
+              <Link href="/feed">Feed</Link>
             </li>
-            <li>Wiki</li>
+            <li>
+              <Link href="/project">Project</Link>
+            </li>
+            <li>
+              <Link href="/board">Task Board</Link>
+            </li>
+            <li>
+              <Link href="wiki">Wiki</Link>
+            </li>
           </ul>
         </nav>
         <article className="contents">

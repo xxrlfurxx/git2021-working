@@ -1,4 +1,4 @@
-function boards() {
+function Boards() {
   return (
     <>
       <div>
@@ -8,4 +8,4 @@ function boards() {
   );
 }
 
-export default boards;
+export default Boards;
