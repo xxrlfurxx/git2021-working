@@ -11,13 +11,12 @@ function Modal() {
       <div className="modal-dialog">
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">
-            <h5 className="modal-title">프로젝트 생성ss</h5>
+            <h5 className="modal-title">프로젝트 생성s</h5>
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
               onClick={() => {
-
               }}
             ></button>
           </div>
